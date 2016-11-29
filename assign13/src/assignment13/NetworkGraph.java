@@ -7,6 +7,7 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.TreeSet;
@@ -164,5 +165,30 @@ public class NetworkGraph {
 	private BestPath DSearch(String carrier){
 		// check if flight contains the carrier
 		return null;
+	}
+	
+	/**
+	 * Generates a DOT file for visualizing the binary heap.
+	 */
+	public void generateDotFile(String filename) {
+		try(PrintWriter out = new PrintWriter(filename)) {
+			out.println("digraph Heap {\n\tnode [shape=record]\n");
+			
+			int i = 0;
+			for(Airport airp : airportSet.values()) {
+				out.println("\tnode" + airp.getName() + " [label = \"<f0> |<f1> " + airp.getName() + "|<f2> \"]");
+				for(Flight flight : airp.getDepartFlights()) {
+					out.println("\tnode" + airp.getName() + ":f0 -> node" + flight.getDestination().getName() + ":f1");
+				}
+//				if(((i*2) + 1) < currentSize)
+//					out.println("\tnode" + i + ":f0 -> node" + ((i*2) + 1) + ":f1");
+//				if(((i*2) + 2) < currentSize)
+//					out.println("\tnode" + i + ":f2 -> node" + ((i*2) + 2) + ":f1");
+//				i++;
+			}
+			out.println("}");
+		} catch (IOException e) {
+			System.out.println(e);
+		}
 	}
 }
