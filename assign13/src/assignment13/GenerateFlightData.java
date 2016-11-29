@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Random;
-import java.util.SortedSet;
 
 /**
  * <p>This class will generate random flights for you to test. If you want to make
@@ -36,9 +35,9 @@ import java.util.SortedSet;
 public class GenerateFlightData {
 	
 	// ONLY EDIT THESE THREE VARIABLES
-	private static int edgeCount = 5;
-	private static int nodeCount = 5;
-	private static String filePath = "fiveOfBoth.csv";
+	private static int edgeCount = 50;
+	private static int nodeCount = 50;
+	private static String filePath = "Flight"+ edgeCount + "_"+ nodeCount+".csv";
 
 	// EDITING ANYTHING BELOW THIS MAY SCREW UP MY CODE SO DO SO AT YOUR OWN RISK.
 	// BTW I do not care if you do I just wont be able to tell you why your broke it

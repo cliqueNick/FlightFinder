@@ -1,6 +1,3 @@
-/**
- * 
- */
 package assignment13;
 
 import java.io.BufferedReader;
@@ -9,8 +6,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.TreeSet;
 
 /**
  * <p>This class represents a graph of flights and airports along with specific
@@ -98,6 +93,7 @@ public class NetworkGraph {
 					originAirport.addDepartFlight(route);
 				}
 			}
+			br.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -174,17 +170,11 @@ public class NetworkGraph {
 		try(PrintWriter out = new PrintWriter(filename)) {
 			out.println("digraph Heap {\n\tnode [shape=record]\n");
 			
-			int i = 0;
 			for(Airport airp : airportSet.values()) {
 				out.println("\tnode" + airp.getName() + " [label = \"<f0> |<f1> " + airp.getName() + "|<f2> \"]");
 				for(Flight flight : airp.getDepartFlights()) {
 					out.println("\tnode" + airp.getName() + ":f0 -> node" + flight.getDestination().getName() + ":f1");
 				}
-//				if(((i*2) + 1) < currentSize)
-//					out.println("\tnode" + i + ":f0 -> node" + ((i*2) + 1) + ":f1");
-//				if(((i*2) + 2) < currentSize)
-//					out.println("\tnode" + i + ":f2 -> node" + ((i*2) + 2) + ":f1");
-//				i++;
 			}
 			out.println("}");
 		} catch (IOException e) {

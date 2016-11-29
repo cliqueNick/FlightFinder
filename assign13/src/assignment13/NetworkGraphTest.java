@@ -2,6 +2,8 @@ package assignment13;
 
 import static org.junit.Assert.*;
 
+import java.io.FileNotFoundException;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -28,5 +30,13 @@ public class NetworkGraphTest {
 		assertEquals(5, tenDuplicateFlights.airportSet.size());
 		tenDuplicateFlights.generateDotFile("tenFlightDot.dot");
 		assertEquals(expected, actual);
+	}
+	
+	@Test
+	public void testDOT() throws FileNotFoundException{
+		String input = "Flight50_50";
+		NetworkGraph newFlight = new NetworkGraph(input + ".csv");
+		newFlight.generateDotFile(input + ".dot");
+		
 	}
 }
