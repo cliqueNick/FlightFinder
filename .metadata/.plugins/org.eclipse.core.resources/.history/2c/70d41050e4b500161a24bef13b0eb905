@@ -1,0 +1,55 @@
+package assignment13;
+
+import java.util.LinkedList;
+
+/**
+ * A node on the graph
+ * @author Nickolas Lee
+ *
+ */
+public class Airport {
+	
+	private LinkedList<Flight> departFlights;// contains the list of departure flight objects
+	boolean visited;
+	double totalWeight;
+	String name;
+	
+	public Airport(String name, boolean visited, double totalWeight) {
+		this.name = name;
+		this.departFlights = new LinkedList<Flight>();
+		this.visited = visited;
+		this.totalWeight = totalWeight;
+	}
+	/**
+	 * @return the visited
+	 */
+	public boolean isVisited() {
+		return visited;
+	}
+	/**
+	 * @param visited the visited to set
+	 */
+	public void setVisited(boolean visited) {
+		this.visited = visited;
+	}
+	/**
+	 * @return the totalWeight
+	 */
+	public double getTotalWeight() {
+		return totalWeight;
+	}
+	/**
+	 * @param totalWeight the totalWeight to set
+	 */
+	public void setTotalWeight(double totalWeight) {
+		this.totalWeight = totalWeight;
+	}
+	/**
+	 * @return the departFlights
+	 */
+	public LinkedList<Flight> getDepartFlights() {
+		return departFlights;
+	}
+	 // TODO need to setDepartFlights? 
+	
+}

@@ -1,0 +1,14 @@
+package assign13;
+
+import java.util.LinkedList;
+
+/**
+ * A node on the graph
+ * @author Nickolas Lee
+ *
+ */
+public class Airport {
+	
+	LinkedList<Flight> departFlights;// contains the list of departure flight objects
+	boolean visited;
+}

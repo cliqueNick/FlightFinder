@@ -1,4 +1,4 @@
-package assign13;
+package assignment13;
 
 import java.util.LinkedList;
 
@@ -9,14 +9,35 @@ import java.util.LinkedList;
  */
 public class Airport {
 	
-	LinkedList<Flight> departFlights;// contains the list of departure flight objects
-	boolean visited;
-	double totalWeight;
-	public Airport(LinkedList<Flight> departFlights, boolean visited, double totalWeight) {
-		this.departFlights = departFlights;
-		this.visited = visited;
-		this.totalWeight = totalWeight;
+	private LinkedList<Flight> departFlights;// contains the list of departure flight objects
+	private boolean visited;
+	private double totalWeight;
+	private String name;
+	
+	public Airport(String name) {
+		this.name = name;
+		this.departFlights = new LinkedList<Flight>();
+		this.visited = false;
+		this.totalWeight = Integer.MAX_VALUE;
 	}
+	
+	
+	/**
+	 * @return the name
+	 */
+	public String getName() {
+		return name;
+	}
+
+
+	/**
+	 * @param departFlights the departFlights to set
+	 */
+	public void addDepartFlight(Flight route) {
+		this.departFlights.add(route);
+	}
+
+
 	/**
 	 * @return the visited
 	 */
@@ -48,5 +69,19 @@ public class Airport {
 		return departFlights;
 	}
 	 // TODO need to setDepartFlights? 
+	
+	/**
+	 * Finds if there are any routes leaving this airport with same destination
+	 * @param destination - the destination of the desired flight
+	 * @return the flight with this destination, null if not
+	 */
+	public Flight getRoute(String destination) {
+		for(Flight currFlight : departFlights) {
+			if(currFlight.getDestination().getName().equals(destination)) {
+				return currFlight;
+			}
+		}
+		return null;
+	}
 	
 }

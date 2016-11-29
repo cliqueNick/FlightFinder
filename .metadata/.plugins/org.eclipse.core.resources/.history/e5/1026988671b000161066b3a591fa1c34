@@ -1,0 +1,11 @@
+package assign13;
+
+/**
+ * A node on the graph
+ * @author Nickolas Lee
+ *
+ */
+public class Airport {
+// a node
+	// store departure flights and arrival flights
+}

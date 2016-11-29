@@ -1,0 +1,12 @@
+package assign13;
+
+/**
+ * A node on the graph
+ * @author Nickolas Lee
+ *
+ */
+public class Airport {
+	// store departure flights and arrival flights
+	// continue the list of departure flight objects
+	LinkedList flights;
+}

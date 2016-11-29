@@ -1,0 +1,20 @@
+package assign13;
+
+/**
+ * An edge in the graph
+ * @author Nickolas Lee
+ *
+ */
+public class Flight {
+	private Airport origin, destination;
+	double cost, flightTime, delay,	distance, canceled;
+	String origin, destination;
+	//enum carrier
+	
+	/**
+	 * Aggregates flights from the same origin and destination
+	 */
+	public void addFlight(){
+		
+	}
+}

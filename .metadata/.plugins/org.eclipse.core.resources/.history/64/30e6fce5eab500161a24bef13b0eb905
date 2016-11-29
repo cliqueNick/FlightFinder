@@ -1,0 +1,34 @@
+package assignment13;
+
+import static org.junit.Assert.*;
+
+import org.junit.Before;
+import org.junit.Test;
+
+public class NetworkGraphTest {
+	NetworkGraph fiveUniqueRoutes;
+	NetworkGraph tenDuplicateFlights;
+	@Before
+	public void setUp() throws Exception {
+		fiveUniqueRoutes = new NetworkGraph("fiveOfBoth.csv");
+		tenDuplicateFlights = new NetworkGraph("tenDuplicateFlights.csv");
+		
+	}
+
+	@Test
+	public void testFiveUniqueRoutes() {
+		assertEquals(5, fiveUniqueRoutes.airportSet.size());
+		assertTrue(fiveUniqueRoutes.airportSet.containsKey("MZF"));
+	}
+	
+	@Test
+	public void testTenDuplicateRoutes() {
+		Flight actual = tenDuplicateFlights.airportSet.get("MZF").getRoute("AHH");
+		
+		assertEquals(5, tenDuplicateFlights.airportSet.size());
+		assertTrue(flightEqual("MZF", "AHH", 50.5, 0.5, 400.0, 37.5, 87.5, tenDuplicateFlights.airportSet.get("MZF").getRoute("AHH")));
+	}
+	
+	private boolean flightEqual(String origin, String destination, double delay, double cancel, double time, double distance, double cost, Flight actual)
+		if()
+}

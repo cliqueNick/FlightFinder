@@ -1,19 +1,23 @@
-package assign13;
+package assignment13;
+
+import java.util.ArrayList;
 
 /**
  * An edge in the graph
- * @author Nickolas Lee
+ * @author Nickolas Lee 
+ * @author Thomas Osimitz U0970671
  *
  */
 public class Flight {
 	private Airport origin, destination;
 	private double cost, time, delay, distance, fractionCanceled;
 	private int count;
-	//enum carrier
+	private ArrayList<String> carriers;
 	
 	
 	public Flight(Airport origin, Airport destination, double cost, double time, double delay, double distance,
-			double fractionCanceled) {
+			double fractionCanceled, String carrier) {
+		carriers = new ArrayList<String>();
 		this.origin = origin;
 		this.destination = destination;
 		this.cost = cost;
@@ -21,18 +25,25 @@ public class Flight {
 		this.delay = delay;
 		this.distance = distance;
 		this.fractionCanceled = fractionCanceled;
+		this.carriers.add(carrier);
 		count = 1;
 	}
 
 	/**
-	 * Aggregates flights from the same origin and destination
+	 * Aggregates flights from the same origin and destination. 
+	 * Updates the current flight object with new information using a running
+	 * average. 
 	 */
 	public void addFlight(double cost, double time, double delay, double distance,
-			double fractionCanceled){
+			double fractionCanceled, String carrier){
 		this.cost = rollingAverage(this.cost, cost, count);
 		this.time = rollingAverage(this.time, time, count);
 		this.delay = rollingAverage(this.delay, delay, count);
 		this.distance = rollingAverage(this.distance, distance, count);
+		this.fractionCanceled = rollingAverage(this.fractionCanceled, fractionCanceled, count);
+		if(!this.carriers.contains(carrier)) {
+			this.carriers.add(carrier);
+		}
 		count++;
 	}
 	
@@ -41,8 +52,7 @@ public class Flight {
 	}
 	
 	public boolean isCarrier(String carrier){
-//		for(each)
-		return false;
+		return this.carriers.contains(carrier);
 	}
 
 	/**
@@ -92,6 +102,16 @@ public class Flight {
 	 */
 	public double getFractionCanceled() {
 		return fractionCanceled;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "Flight [origin=" + origin.getName() + ", destination=" + destination.getName() + ", cost=" + cost + ", time=" + time
+				+ ", delay=" + delay + ", distance=" + distance + ", fractionCanceled=" + fractionCanceled + ", count="
+				+ count + ", carriers=" + carriers.toString() + "]";
 	}
 	
 	

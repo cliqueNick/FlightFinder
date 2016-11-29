@@ -1,0 +1,51 @@
+package assignment13;
+
+import static org.junit.Assert.*;
+
+import org.junit.Before;
+import org.junit.Test;
+
+public class NetworkGraphTest {
+	NetworkGraph fiveUniqueRoutes;
+	NetworkGraph tenDuplicateFlights;
+	@Before
+	public void setUp() throws Exception {
+		fiveUniqueRoutes = new NetworkGraph("fiveOfBoth.csv");
+		tenDuplicateFlights = new NetworkGraph("tenDuplicateFlights.csv");
+		
+	}
+
+	@Test
+	public void testFiveUniqueRoutes() {
+		assertEquals(5, fiveUniqueRoutes.airportSet.size());
+		assertTrue(fiveUniqueRoutes.airportSet.containsKey("MZF"));
+	}
+	
+	@Test
+	public void testTenDuplicateRoutes() {
+		String actual = tenDuplicateFlights.airportSet.get("MZF").getRoute("AHH").toString();
+		String expected = "Flight [origin=MZF, destination=AHH, cost=87.5, time=400.0, delay=50.5, distance=37.5, fractionCanceled=0.5, count=2, carriers=[AA, OO]]";
+		System.out.print(actual);
+		assertEquals(5, tenDuplicateFlights.airportSet.size());
+		assertEquals(expected, actual);
+	}
+	
+//	private boolean flightEqual(String origin, String destination, double delay, double cancel, double time, double distance, double cost, Flight actual)
+//		if(!origin.equals(actual.getOrigin().getName())) {
+//			return false;
+//		}
+//		if(!destination.equals(actual.getDestination().getName())) {
+//			return false;
+//		}
+//		if(delay != actual.getDelay()) {
+//			return false;
+//		}
+//		if(cancel != actual.getFractionCanceled()) {
+//			return false;
+//		}
+//		if(time != actual.getTime()) {
+//			return false;
+//		}
+//		if
+
+}

@@ -1,0 +1,21 @@
+package assign13;
+
+/**
+ * An edge in the graph
+ * @author Nickolas Lee
+ *
+ */
+public class Flight {
+	// airport objects: origin, destination
+	double cost, flightTime, delay,	distance, canceled;
+	// carrier
+	// origin 
+	// destination
+	
+	/**
+	 * Aggregates flights from the same origin and destination
+	 */
+	public void addFlight(){
+		
+	}
+}

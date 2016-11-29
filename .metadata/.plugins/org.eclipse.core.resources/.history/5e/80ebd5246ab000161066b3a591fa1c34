@@ -1,0 +1,10 @@
+package assign13;
+
+/**
+ * An edge in the graph
+ * @author Nickolas Lee
+ *
+ */
+public class Flight {
+// an edge
+}

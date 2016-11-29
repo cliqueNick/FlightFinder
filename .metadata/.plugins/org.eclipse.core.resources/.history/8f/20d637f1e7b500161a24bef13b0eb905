@@ -1,0 +1,20 @@
+package assignment13;
+
+import static org.junit.Assert.*;
+
+import org.junit.Before;
+import org.junit.Test;
+
+public class NetworkGraphTest {
+	NetworkGraph fiveUniqueRoutes;
+	@Before
+	public void setUp() throws Exception {
+		fiveUniqueRoutes = new NetworkGraph("fiveOfBoth.csv");
+	}
+
+	@Test
+	public void testFiveUniqueRoutes() {
+		
+	}
+
+}

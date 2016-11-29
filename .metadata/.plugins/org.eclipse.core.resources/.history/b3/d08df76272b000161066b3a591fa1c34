@@ -1,0 +1,40 @@
+package assign13;
+
+import java.util.LinkedList;
+
+/**
+ * A node on the graph
+ * @author Nickolas Lee
+ *
+ */
+public class Airport {
+	
+	LinkedList<Flight> departFlights;// contains the list of departure flight objects
+	boolean visited;
+	double totalWeight;
+	public Airport(LinkedList<Flight> departFlights, boolean visited, double totalWeight) {
+		this.departFlights = departFlights;
+		this.visited = visited;
+		this.totalWeight = totalWeight;
+	}
+	/**
+	 * @return the departFlights
+	 */
+	public LinkedList<Flight> getDepartFlights() {
+		return departFlights;
+	}
+	/**
+	 * @return the visited
+	 */
+	public boolean isVisited() {
+		return visited;
+	}
+	/**
+	 * @return the totalWeight
+	 */
+	public double getTotalWeight() {
+		return totalWeight;
+	}
+	
+	
+}

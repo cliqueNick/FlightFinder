@@ -1,0 +1,2 @@
+2016-11-21 20:55:24,194 [Thread-6] ERROR org.eclipse.jgit.util.FS - fatal: Could not switch to '/usr/local/stow/git/git-2.9.0/etc/': No such file or directory
+

@@ -1,0 +1,16 @@
+package assign13;
+
+public class NetworkGraph {
+
+	public NetworkGraph(){
+
+	}
+
+//	public BestPath getBestPath(String origin, String destination, FlightCriteria criteria){
+//
+//	}
+//
+//	public BestPath getBestPath(String origin, String destination, FlightCriteria criteria, String airliner){
+//
+//	}
+}

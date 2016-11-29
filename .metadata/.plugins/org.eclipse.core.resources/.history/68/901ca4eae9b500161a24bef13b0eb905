@@ -1,0 +1,30 @@
+package assignment13;
+
+import static org.junit.Assert.*;
+
+import org.junit.Before;
+import org.junit.Test;
+
+public class NetworkGraphTest {
+	NetworkGraph fiveUniqueRoutes;
+	NetworkGraph tenDuplicateFlights;
+	@Before
+	public void setUp() throws Exception {
+		fiveUniqueRoutes = new NetworkGraph("fiveOfBoth.csv");
+		tenDuplicateFlights = new NetworkGraph("tenDuplicateFlights.csv");
+		
+	}
+
+	@Test
+	public void testFiveUniqueRoutes() {
+		assertEquals(5, fiveUniqueRoutes.airportSet.size());
+		assertTrue(fiveUniqueRoutes.airportSet.containsKey("MZF"));
+	}
+	
+	@Test
+	public void testTenDuplicateRoutes() {
+		assertTrue(flightEqual())
+	}
+	
+	private boolean flightEqual()
+}
