@@ -10,18 +10,36 @@ import java.util.LinkedList;
 public class Airport {
 	
 	private LinkedList<Flight> departFlights;// contains the list of departure flight objects
+	private Airport cameFrom;
+	private String name;
 	private boolean visited;
 	private double totalWeight;
-	private String name;
 	
 	public Airport(String name) {
 		this.name = name;
+		this.cameFrom = null;
 		this.departFlights = new LinkedList<Flight>();
 		this.visited = false;
 		this.totalWeight = Integer.MAX_VALUE;
 	}
 	
 	
+	/**
+	 * @return the cameFrom
+	 */
+	public Airport getCameFrom() {
+		return cameFrom;
+	}
+
+
+	/**
+	 * @param cameFrom the cameFrom to set
+	 */
+	public void setCameFrom(Airport cameFrom) {
+		this.cameFrom = cameFrom;
+	}
+
+
 	/**
 	 * @return the name
 	 */
@@ -75,6 +93,15 @@ public class Airport {
 	 * @param destination - the destination of the desired flight
 	 * @return the flight with this destination, null if not
 	 */
+	public Flight getRoute(Airport destination) {
+		for(Flight currFlight : departFlights) {
+			if(currFlight.getDestination().equals(destination)) {
+				return currFlight;
+			}
+		}
+		return null;
+	}
+	
 	public Flight getRoute(String destination) {
 		for(Flight currFlight : departFlights) {
 			if(currFlight.getDestination().getName().equals(destination)) {
@@ -83,5 +110,4 @@ public class Airport {
 		}
 		return null;
 	}
-	
 }

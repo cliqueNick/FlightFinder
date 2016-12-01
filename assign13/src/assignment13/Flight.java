@@ -36,6 +36,7 @@ public class Flight {
 	 */
 	public void addFlight(double cost, double time, double delay, double distance,
 			double fractionCanceled, String carrier){
+		// TODO add if check for negative values
 		this.cost = rollingAverage(this.cost, cost, count);
 		this.time = rollingAverage(this.time, time, count);
 		this.delay = rollingAverage(this.delay, delay, count);
@@ -70,38 +71,17 @@ public class Flight {
 	}
 
 	/**
-	 * @return the cost
+	 * @return the Weight of this flight
 	 */
-	public double getCost() {
-		return cost;
-	}
-
-	/**
-	 * @return the time
-	 */
-	public double getTime() {
-		return time;
-	}
-
-	/**
-	 * @return the delay
-	 */
-	public double getDelay() {
-		return delay;
-	}
-
-	/**
-	 * @return the distance
-	 */
-	public double getDistance() {
-		return distance;
-	}
-
-	/**
-	 * @return the fractionCanceled
-	 */
-	public double getFractionCanceled() {
-		return fractionCanceled;
+	public double getWeight(FlightCriteria fc) {
+		switch(fc){
+		case COST: return cost;
+		case DELAY: return delay;
+		case DISTANCE: return distance;
+		case CANCELED: return fractionCanceled;
+		case TIME: return time;
+		}
+		return -1;
 	}
 
 	/* (non-Javadoc)

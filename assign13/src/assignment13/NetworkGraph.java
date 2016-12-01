@@ -5,7 +5,9 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.PriorityQueue;
 
 /**
  * <p>This class represents a graph of flights and airports along with specific
@@ -25,7 +27,7 @@ import java.util.HashMap;
  * @author CS2420 Teaching Staff - Spring 2016
  */
 public class NetworkGraph {
-	
+
 	HashMap<String, Airport> airportSet;
 	Airport origin;
 	Airport destination;
@@ -53,51 +55,51 @@ public class NetworkGraph {
 		// 		appropriately in this object.
 		BufferedReader br = new BufferedReader(new FileReader(flightInfoPath));
 		double cost, time, delay, distance, fractionCanceled;
-		String currentLine, origin, destination, carrier;
+		String currentLine, originName, destinationName, carrier;
 		String[] currentData;
 		airportSet = new HashMap<String, Airport>();
-		
+
 		try {
 			currentLine = br.readLine(); //read in and ignore header
 			while((currentLine = br.readLine()) != null) {
 				currentData = currentLine.split(",");
-				origin = currentData[0];
-				destination = currentData[1];
+				originName = currentData[0];
+				destinationName = currentData[1];
 				carrier = currentData[2];
 				delay = Double.parseDouble(currentData[3]);
 				fractionCanceled = Double.parseDouble(currentData[4]);
 				time = Double.parseDouble(currentData[5]);
 				distance = Double.parseDouble(currentData[6]);
 				cost = Double.parseDouble(currentData[7]);
-				
-				if(!airportSet.containsKey(origin)) {
-					Airport newOrigin = new Airport(origin);
-					airportSet.put(origin, newOrigin);
+
+				if(!airportSet.containsKey(originName)) {
+					Airport newOrigin = new Airport(originName);
+					airportSet.put(originName, newOrigin);
 				}
-				
-				if(!airportSet.containsKey(destination)) {
-					Airport newDestination = new Airport(destination);
-					airportSet.put(destination, newDestination);
+
+				if(!airportSet.containsKey(destinationName)) {
+					Airport newDestination = new Airport(destinationName);
+					airportSet.put(destinationName, newDestination);
 				}
-				
-				Airport originAirport = airportSet.get(origin);
-				Airport destinationAirport = airportSet.get(destination);
-				
+
+				this.origin = airportSet.get(originName);
+				this.destination = airportSet.get(destinationName);
+
 				//TODO: IF RUNTIME RIDICULOUS, POSSIBLE TIME SAVER TO PUT HERE
-				Flight preExistingFlight = originAirport.getRoute(destination);
+				Flight preExistingFlight = origin.getRoute(this.destination);
 				if(preExistingFlight != null) {
 					preExistingFlight.addFlight(cost, time, delay, distance, fractionCanceled, carrier);
 				}
 				else {
-					Flight route = new Flight(originAirport, destinationAirport, cost, time, delay, distance, fractionCanceled, carrier);
-					originAirport.addDepartFlight(route);
+					Flight route = new Flight(origin, destination, cost, time, delay, distance, fractionCanceled, carrier);
+					origin.addDepartFlight(route);
 				}
 			}
 			br.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+
 	}
 
 	/**
@@ -125,13 +127,20 @@ public class NetworkGraph {
 	public BestPath getBestPath(String origin, String destination, FlightCriteria criteria) {
 		//TODO: First figure out what kind of path you need to get (HINT: Use a switch!) then
 		//		Search for the shortest path using Dijkstra's algorithm.
-		
-		// switch on the criteria enum for the different kinds of cost
-		
+		BestPath answer = new BestPath();
+		answer.path = new ArrayList<String>();
+
+		if(origin.length() == 3 && destination.length() == 3 && criteria != null){
+			this.origin = airportSet.get(origin);
+			this.destination = airportSet.get(destination);
+
+			answer = DSearch(null, criteria);
+		}
+		return answer;
 		// create the BestPath object from DSearch helper method
-		return null;
+
 	}
-	
+
 	/**
 	 * <p>This overloaded method should do the same as the one above only when looking for paths
 	 * skip the ones that don't match the given airliner.</p>
@@ -153,23 +162,67 @@ public class NetworkGraph {
 	 */
 	public BestPath getBestPath(String origin, String destination, FlightCriteria criteria, String airliner) {
 		//Find origin and destination airport objects and set equal to global memebers
-		//TODO: call other getBestPath
-		
-		return null;
+		//TODO: call other getBestPath and set airliner to null
+		this.origin = airportSet.get(origin);
+		this.destination = airportSet.get(destination);
+
+		return DSearch(airliner, criteria);
 	}
-	
-	private BestPath DSearch(String carrier){
+
+	private BestPath DSearch(String carrier, FlightCriteria criteria){
 		// check if flight contains the carrier
-		return null;
+		BestPath bestPath = new BestPath();
+		bestPath.path = new ArrayList<String>();
+		PriorityQueue<Airport> pq = new PriorityQueue<Airport>();
+		pq.add(origin);
+
+		while(!pq.isEmpty()){
+			Airport currentAir = pq.poll();	
+
+			if(this.destination.equals(currentAir)){
+				ArrayList<String> temp = new ArrayList<String>();
+				bestPath.pathLength = currentAir.getTotalWeight();
+
+				while(currentAir.getCameFrom() != null) {
+					temp.add(currentAir.getName());
+					currentAir = currentAir.getCameFrom();
+				}
+				temp.add(currentAir.getName());
+
+				for(int current = temp.size() - 1; current >= 0; current--) {
+					String airCode = temp.get(current);
+					bestPath.path.add(airCode);
+				}
+
+				return bestPath;
+			}
+
+			currentAir.setVisited(true);
+
+			for(Flight nextFlight : currentAir.getDepartFlights()){
+				Airport neighbor = nextFlight.getDestination();
+				if((carrier == null) || (carrier != null && nextFlight.isCarrier(carrier))) {
+					if(!neighbor.isVisited()){
+						if(neighbor.getTotalWeight() > currentAir.getTotalWeight() + nextFlight.getWeight(criteria)){
+							neighbor.setCameFrom(currentAir);
+							neighbor.setTotalWeight(currentAir.getTotalWeight() + nextFlight.getWeight(criteria));
+							pq.add(neighbor);
+						}
+					}
+				}
+			}
+		}
+
+		return bestPath;
 	}
-	
+
 	/**
 	 * Generates a DOT file for visualizing the binary heap.
 	 */
 	public void generateDotFile(String filename) {
 		try(PrintWriter out = new PrintWriter(filename)) {
 			out.println("digraph Heap {\n\tnode [shape=record]\n");
-			
+
 			for(Airport airp : airportSet.values()) {
 				out.println("\tnode" + airp.getName() + " [label = \"<f0> |<f1> " + airp.getName() + "|<f2> \"]");
 				for(Flight flight : airp.getDepartFlights()) {
