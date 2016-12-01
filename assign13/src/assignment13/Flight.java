@@ -3,9 +3,9 @@ package assignment13;
 import java.util.ArrayList;
 
 /**
- * An edge in the graph
- * @author Nickolas Lee 
- * @author Thomas Osimitz U0970671
+ * Represents a flight between two airports. Thought of as an edge in the graph.
+ * @author Nickolas Lee (U0860626)
+ * @author Thomas Osimitz (U0970671)
  *
  */
 public class Flight {

@@ -3,18 +3,19 @@ package assignment13;
 import java.util.LinkedList;
 
 /**
- * A node on the graph
- * @author Nickolas Lee
+ * Class represents an Airport. Thought of as a node on the NetworkGraph.
+ * @author Nickolas Lee (U0860626)
+ * @author Thomas Osimitz (U0970671)
  *
  */
-public class Airport {
-	
+public class Airport implements Comparable<Airport> {
+
 	private LinkedList<Flight> departFlights;// contains the list of departure flight objects
 	private Airport cameFrom;
 	private String name;
 	private boolean visited;
 	private double totalWeight;
-	
+
 	public Airport(String name) {
 		this.name = name;
 		this.cameFrom = null;
@@ -22,15 +23,13 @@ public class Airport {
 		this.visited = false;
 		this.totalWeight = Integer.MAX_VALUE;
 	}
-	
-	
+
 	/**
 	 * @return the cameFrom
 	 */
 	public Airport getCameFrom() {
 		return cameFrom;
 	}
-
 
 	/**
 	 * @param cameFrom the cameFrom to set
@@ -39,7 +38,6 @@ public class Airport {
 		this.cameFrom = cameFrom;
 	}
 
-
 	/**
 	 * @return the name
 	 */
@@ -47,14 +45,12 @@ public class Airport {
 		return name;
 	}
 
-
 	/**
 	 * @param departFlights the departFlights to set
 	 */
 	public void addDepartFlight(Flight route) {
 		this.departFlights.add(route);
 	}
-
 
 	/**
 	 * @return the visited
@@ -86,8 +82,8 @@ public class Airport {
 	public LinkedList<Flight> getDepartFlights() {
 		return departFlights;
 	}
-	 // TODO need to setDepartFlights? 
-	
+	// TODO need to setDepartFlights? 
+
 	/**
 	 * Finds if there are any routes leaving this airport with same destination
 	 * @param destination - the destination of the desired flight
@@ -101,7 +97,7 @@ public class Airport {
 		}
 		return null;
 	}
-	
+
 	public Flight getRoute(String destination) {
 		for(Flight currFlight : departFlights) {
 			if(currFlight.getDestination().getName().equals(destination)) {
@@ -109,5 +105,14 @@ public class Airport {
 			}
 		}
 		return null;
+	}
+
+
+	@Override
+	public int compareTo(Airport otherAirport) {
+		if(!(otherAirport instanceof Airport)) {
+			throw new IllegalArgumentException();
+		}
+		return (int) (this.totalWeight - (otherAirport).getTotalWeight());
 	}
 }
