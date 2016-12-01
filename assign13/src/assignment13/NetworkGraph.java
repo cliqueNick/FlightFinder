@@ -133,7 +133,6 @@ public class NetworkGraph {
 		if(origin.length() == 3 && destination.length() == 3 && criteria != null){
 			this.origin = airportSet.get(origin);
 			this.destination = airportSet.get(destination);
-
 			answer = DSearch(null, criteria);
 		}
 		return answer;
@@ -163,9 +162,12 @@ public class NetworkGraph {
 	public BestPath getBestPath(String origin, String destination, FlightCriteria criteria, String airliner) {
 		//Find origin and destination airport objects and set equal to global memebers
 		//TODO: call other getBestPath and set airliner to null
+		BestPath answer = new BestPath();
+		answer.path = new ArrayList<String>();
+		if(origin.length() == 3 && destination.length() == 3 && criteria != null){
 		this.origin = airportSet.get(origin);
 		this.destination = airportSet.get(destination);
-
+		}
 		return DSearch(airliner, criteria);
 	}
 
