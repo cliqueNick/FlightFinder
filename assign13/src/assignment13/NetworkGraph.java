@@ -150,7 +150,8 @@ public class NetworkGraph {
 	 */
 	public BestPath getBestPath(String originName, String destinationName, FlightCriteria criteria, String airliner) {
 		BestPath bestPath = new BestPath();
-		if(originName.length() == 3 && destinationName.length() == 3 && criteria != null){
+		bestPath.path = new ArrayList<String>();
+		if(legalArguments(originName, destinationName, criteria)){
 			// refresh everything
 			cleanUp();
 			modified = true; 
@@ -159,7 +160,6 @@ public class NetworkGraph {
 			this.destination = airportSet.get(destinationName);
 
 			// set up priority queue
-			bestPath.path = new ArrayList<String>();
 			PriorityQueue<Airport> pq = new PriorityQueue<Airport>();
 			pq.add(this.origin);
 
@@ -191,11 +191,14 @@ public class NetworkGraph {
 					// whether a carrier is specified or not ensures that the desired carrier operates the flight
 					if((airliner == null) || (airliner != null && nextFlight.isCarrier(airliner))) {
 						if(!neighbor.isVisited()){ // don't want to add if visited
-							// if found a cheaper route 
-							if(neighbor.getTotalWeight() > currentAir.getTotalWeight() + nextFlight.getWeight(criteria)){
-								neighbor.setCameFrom(currentAir);
-								neighbor.setTotalWeight(currentAir.getTotalWeight() + nextFlight.getWeight(criteria));
-								pq.add(neighbor);
+							//If flight has requested criteria
+							if(nextFlight.getWeight(criteria) >= 0) {
+								// if found a cheaper route 
+								if(neighbor.getTotalWeight() > currentAir.getTotalWeight() + nextFlight.getWeight(criteria)){
+									neighbor.setCameFrom(currentAir);
+									neighbor.setTotalWeight(currentAir.getTotalWeight() + nextFlight.getWeight(criteria));
+									pq.add(neighbor);
+								}
 							}
 						}
 					}
@@ -203,6 +206,31 @@ public class NetworkGraph {
 			}
 		}
 		return bestPath;
+	}
+
+	/**
+	 * Checks for invalid input
+	 * 
+	 * @param origin - name of origin airport
+	 * @param destination - name of destination airport
+	 * @param criteria - desired flight aspect to examine
+	 * @return - false if any of the parameters are invalid, true otherwise
+	 */
+	private boolean legalArguments(String origin, String destination, FlightCriteria criteria) {
+		if(!this.airportSet.containsKey(origin)) {
+			return false;
+		}
+		if(!this.airportSet.containsKey(destination)) {
+			return false;
+		}
+		if(criteria == null) {
+			return false;
+		}
+		if(origin == destination) { 
+			return false;
+		}
+
+		return true;
 	}
 
 	/**
@@ -220,15 +248,20 @@ public class NetworkGraph {
 
 	/**
 	 * Generates a DOT file for visualizing the NetworkGraph. 
+	 * 
+	 * @param filename - the name a path of the dot file to be created. Please
+	 * add the .dot extension. 
+	 * @param flightCriteria - desired flight aspect to examine
 	 */
-	public void generateDotFile(String filename) {
+	public void generateDotFile(String filename, FlightCriteria flightCriteria) {
 		try(PrintWriter out = new PrintWriter(filename)) {
 			out.println("digraph Heap {\n\tnode [shape=record]\n");
 
 			for(Airport airp : airportSet.values()) { // miracle we figured this out! 
 				out.println("\tnode" + airp.getName() + " [label = \"<f0> |<f1> " + airp.getName() + "|<f2> \"]");
 				for(Flight flight : airp.getDepartFlights()) {
-					out.println("\tnode" + airp.getName() + ":f0 -> node" + flight.getDestination().getName() + ":f1");
+					out.println("\tnode" + airp.getName() + ":f0 -> node" + flight.getDestination().getName() + ":f1" + " [label=\"" + flight.getWeight(flightCriteria) + "\"]");
+					//					out.println(airp.getName() + " -> " + flight.getDestination().getName() + "[ label=\"" + flight.getWeight(flightCriteria) + "\"]");
 				}
 			}
 			out.println("}");

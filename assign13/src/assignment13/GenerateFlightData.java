@@ -35,9 +35,10 @@ import java.util.Random;
 public class GenerateFlightData {
 	
 	// ONLY EDIT THESE THREE VARIABLES
-	private static int edgeCount = 50;
-	private static int nodeCount = 50;
-	private static String filePath = "Flight"+ edgeCount + "_"+ nodeCount+".csv";
+	private static int edgeCount = 5;
+	private static int nodeCount = 5;
+	private static String loc = "src/assignment13/";
+	private static String filePath = loc + "Flight"+ edgeCount + "_"+ nodeCount+".csv";
 
 	// EDITING ANYTHING BELOW THIS MAY SCREW UP MY CODE SO DO SO AT YOUR OWN RISK.
 	// BTW I do not care if you do I just wont be able to tell you why your broke it
