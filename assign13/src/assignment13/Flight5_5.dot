@@ -1,0 +1,14 @@
+digraph Heap {
+	node [shape=record]
+
+	nodeQKJ [label = "<f0> |<f1> QKJ|<f2> "]
+	nodeQKJ:f0 -> nodeHJF:f1 [label="323.37"]
+	nodeQKJ:f0 -> nodeJKP:f1 [label="5280.0"]
+	nodeHJF [label = "<f0> |<f1> HJF|<f2> "]
+	nodeHJF:f0 -> nodeQKJ:f1 [label="277.13"]
+	nodeHJF:f0 -> nodeGCK:f1 [label="300.0"]
+	nodeJKP [label = "<f0> |<f1> JKP|<f2> "]
+	nodeGCK [label = "<f0> |<f1> GCK|<f2> "]
+	nodeGCK:f0 -> nodeJKP:f1 [label="314.44"]
+	nodeGCK:f0 -> nodeHJF:f1 [label="228.86"]
+}

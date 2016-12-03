@@ -35,8 +35,7 @@ public class Flight {
 	 * average. 
 	 */
 	public void addFlight(double cost, double time, double delay, double distance,
-			double fractionCanceled, String carrier){
-		// TODO add if check for negative values
+		double fractionCanceled, String carrier){
 		this.cost = rollingAverage(this.cost, cost, count);
 		this.time = rollingAverage(this.time, time, count);
 		this.delay = rollingAverage(this.delay, delay, count);
@@ -48,10 +47,23 @@ public class Flight {
 		count++;
 	}
 	
+	/**
+	 * Computes the rolling average
+	 * @param value - the current value 
+	 * @param newDatum - the new value to be average in
+	 * @param count - the current count of the number of flights 
+	 * with the same origin and destination
+	 * @return the new average
+	 */
 	private double rollingAverage(double value, double newDatum, int count) {
 		return ((value*(count) + newDatum)/(count + 1));
 	}
 	
+	/**
+	 * Checks whether the carrier provided is in the list of known carriers.
+	 * @param carrier - the carrier to be checked
+	 * @return true if carrier was found
+	 */
 	public boolean isCarrier(String carrier){
 		return this.carriers.contains(carrier);
 	}
@@ -93,6 +105,4 @@ public class Flight {
 				+ ", delay=" + delay + ", distance=" + distance + ", fractionCanceled=" + fractionCanceled + ", count="
 				+ count + ", carriers=" + carriers.toString() + "]";
 	}
-	
-	
 }

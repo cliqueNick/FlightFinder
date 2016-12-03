@@ -82,7 +82,6 @@ public class Airport implements Comparable<Airport> {
 	public LinkedList<Flight> getDepartFlights() {
 		return departFlights;
 	}
-	// TODO need to setDepartFlights? 
 
 	/**
 	 * Finds if there are any routes leaving this airport with same destination
@@ -98,6 +97,11 @@ public class Airport implements Comparable<Airport> {
 		return null;
 	}
 
+	/**
+	 * Finds if there are any routes leaving this airport with same destination
+	 * @param destination - the destination of the desired flight
+	 * @return the flight with this destination, null if not
+	 */
 	public Flight getRoute(String destination) {
 		for(Flight currFlight : departFlights) {
 			if(currFlight.getDestination().getName().equals(destination)) {
@@ -106,7 +110,6 @@ public class Airport implements Comparable<Airport> {
 		}
 		return null;
 	}
-
 
 	@Override
 	public int compareTo(Airport otherAirport) {

@@ -1,0 +1,14 @@
+digraph Heap {
+	node [shape=record]
+
+	nodeAHH [label = "<f0> |<f1> AHH|<f2> "]
+	nodeATT [label = "<f0> |<f1> ATT|<f2> "]
+	nodeATT:f0 -> nodeWQU:f1 [label="707.43"]
+	nodeMZF [label = "<f0> |<f1> MZF|<f2> "]
+	nodeMZF:f0 -> nodeAHH:f1 [label="87.5"]
+	nodeMZF:f0 -> nodeARN:f1 [label="436.23"]
+	nodeWQU [label = "<f0> |<f1> WQU|<f2> "]
+	nodeWQU:f0 -> nodeMZF:f1 [label="802.98"]
+	nodeARN [label = "<f0> |<f1> ARN|<f2> "]
+	nodeARN:f0 -> nodeMZF:f1 [label="325.08"]
+}

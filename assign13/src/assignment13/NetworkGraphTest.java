@@ -50,7 +50,17 @@ public class NetworkGraphTest {
 		NetworkGraph newFlight = new NetworkGraph(input + ".csv");
 		newFlight.generateDotFile(input + ".dot", FlightCriteria.COST);
 	}
-
+	
+	@Test
+	public void testEmptyCSV() throws FileNotFoundException{
+		String input = loc+"empty";
+		NetworkGraph emptyFlight = new NetworkGraph(input + ".csv");
+		String expected = "Path Length: 0.0\nPath: []";
+		BestPath experimental = emptyFlight.getBestPath("ZKA", "SXO", FlightCriteria.DISTANCE);
+		assertEquals(expected, experimental.toString());
+		emptyFlight.generateDotFile(input + ".dot", FlightCriteria.COST);
+	}
+	
 	@Test
 	public void testGetBestPathNoAirlineDistance(){
 		String expected = "Path Length: 3594.0\nPath: [ZKA, OIW, OSM, SXO]";
@@ -112,6 +122,13 @@ public class NetworkGraphTest {
 	@Test
 	public void testAirportWithoutAnyDepartures() {
 		BestPath experimental = fiftyFiftyFlight.getBestPath("COF", "LXR", FlightCriteria.COST);
+		String expected = "Path Length: 0.0\nPath: []";
+		assertEquals(expected, experimental.toString());
+	}
+	
+	@Test
+	public void testNullAirport() {
+		BestPath experimental = fiftyFiftyFlight.getBestPath(null, null, FlightCriteria.COST);
 		String expected = "Path Length: 0.0\nPath: []";
 		assertEquals(expected, experimental.toString());
 	}
@@ -205,8 +222,4 @@ public class NetworkGraphTest {
 		String expected = "Path Length: 0.0\nPath: []";
 		assertEquals(expected, experimental.toString());
 	}
-
-	// Ways to improve
-	// Route cancellation odds, as well as if flight has always been cancelled, skip!
-	// return averages per airliner not per flight origin and destination
 }
