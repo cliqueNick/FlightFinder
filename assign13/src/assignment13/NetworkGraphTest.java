@@ -57,15 +57,25 @@ public class NetworkGraphTest {
 		NetworkGraph emptyFlight = new NetworkGraph(input + ".csv");
 		String expected = "Path Length: 0.0\nPath: []";
 		BestPath experimental = emptyFlight.getBestPath("ZKA", "SXO", FlightCriteria.DISTANCE);
+//		emptyFlight.generateDotFile(input + ".dot", FlightCriteria.DISTANCE);
 		assertEquals(expected, experimental.toString());
-		emptyFlight.generateDotFile(input + ".dot", FlightCriteria.COST);
+	}
+	
+	@Test
+	public void testAllNodesWithWeightOfZero() throws FileNotFoundException{
+		String input = loc+"emptyWeights";
+		NetworkGraph emptyFlight = new NetworkGraph(input + ".csv");
+		String expected = "Path Length: 0.0\nPath: [ARN, MZF, AHH]";
+		BestPath experimental = emptyFlight.getBestPath("ARN", "AHH", FlightCriteria.DISTANCE);
+//		emptyFlight.generateDotFile(input + ".dot", FlightCriteria.DISTANCE);
+		assertEquals(expected, experimental.toString());
 	}
 	
 	@Test
 	public void testGetBestPathNoAirlineDistance(){
 		String expected = "Path Length: 3594.0\nPath: [ZKA, OIW, OSM, SXO]";
 		BestPath experimental = fiftyFiftyFlight.getBestPath("ZKA", "SXO", FlightCriteria.DISTANCE);
-		fiftyFiftyFlight.generateDotFile(loc+"fiftyFiftyDISTANCE.dot", FlightCriteria.DISTANCE);
+//		fiftyFiftyFlight.generateDotFile(loc+"fiftyFiftyDISTANCE.dot", FlightCriteria.DISTANCE);
 		assertEquals(expected, experimental.toString());
 	}
 
@@ -73,8 +83,8 @@ public class NetworkGraphTest {
 	public void testGetBestPathNoAirlineCost(){
 		String expected = "Path Length: 1588.44\nPath: [ZKA, KIT, PDE, SXO]";
 		BestPath experimental = fiftyFiftyFlight.getBestPath("ZKA", "SXO", FlightCriteria.COST);
+//		fiftyFiftyFlight.generateDotFile(loc+"fiftyFiftyFlightCOST.dot", FlightCriteria.COST);
 		assertEquals(expected, experimental.toString());
-		fiftyFiftyFlight.generateDotFile(loc+"fiftyFiftyFlightCOST.dot", FlightCriteria.COST);
 	}
 
 	@Test
@@ -152,7 +162,7 @@ public class NetworkGraphTest {
 	public void testTIMEEnum() {
 		BestPath experimental = fiftyFiftyFlight.getBestPath("ZKA", "SXO", FlightCriteria.TIME);
 		String expected = "Path Length: 520.0\nPath: [ZKA, OIW, OSM, SXO]";
-		fiftyFiftyFlight.generateDotFile(loc+"fiftyFiftyTIME.dot", FlightCriteria.TIME);
+//		fiftyFiftyFlight.generateDotFile(loc+"fiftyFiftyTIME.dot", FlightCriteria.TIME);
 		assertEquals(expected, experimental.toString());
 	}
 
@@ -160,7 +170,7 @@ public class NetworkGraphTest {
 	public void testCANCELEDEnum() {
 		BestPath experimental = forCanceled.getBestPath("ZKA", "SXO", FlightCriteria.CANCELED);
 		String expected = "Path Length: 1.22\nPath: [ZKA, KIT, PDE, SXO]";
-		fiftyFiftyFlight.generateDotFile(loc+"fiftyFiftyCANCELED.dot", FlightCriteria.CANCELED);
+//		fiftyFiftyFlight.generateDotFile(loc+"fiftyFiftyCANCELED.dot", FlightCriteria.CANCELED);
 		assertEquals(expected, experimental.toString());
 	}
 
@@ -168,7 +178,7 @@ public class NetworkGraphTest {
 	public void testDELAYEnum() {
 		BestPath experimental = fiftyFiftyFlight.getBestPath("ZKA", "SXO", FlightCriteria.DELAY);
 		String expected = "Path Length: 761.0\nPath: [ZKA, OIW, OSM, SXO]";
-		fiftyFiftyFlight.generateDotFile(loc+"fiftyFiftyDELAY.dot", FlightCriteria.DELAY);
+//		fiftyFiftyFlight.generateDotFile(loc+"fiftyFiftyDELAY.dot", FlightCriteria.DELAY);
 		assertEquals(expected, experimental.toString());
 	}
 
@@ -180,7 +190,7 @@ public class NetworkGraphTest {
 	}
 
 	@Test
-	public void testCleanu(){
+	public void testCleanUp(){
 		BestPath expected = fiftyFiftyFlight.getBestPath("ZKA", "SXO", FlightCriteria.DISTANCE);
 		BestPath actual = fiftyFiftyFlight.getBestPath("ZKA", "SXO", FlightCriteria.DISTANCE);
 		assertEquals(expected.toString(), actual.toString());

@@ -261,7 +261,6 @@ public class NetworkGraph {
 				out.println("\tnode" + airp.getName() + " [label = \"<f0> |<f1> " + airp.getName() + "|<f2> \"]");
 				for(Flight flight : airp.getDepartFlights()) {
 					out.println("\tnode" + airp.getName() + ":f0 -> node" + flight.getDestination().getName() + ":f1" + " [label=\"" + flight.getWeight(flightCriteria) + "\"]");
-					//					out.println(airp.getName() + " -> " + flight.getDestination().getName() + "[ label=\"" + flight.getWeight(flightCriteria) + "\"]");
 				}
 			}
 			out.println("}");
